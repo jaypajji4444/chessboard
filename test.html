@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type="image\gif" rel="icon" href="c1.jfif" sizes="16x16">
+  
+     
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+  
+    table
+        {
+    background-color:burlywood;
+    border-style: solid;      
+    }
+
+    td{
+       background-color:cadetblue; 
+       height:4em;
+       width:4em;
+       text-align: center;
+   }
+
+   
+    .first
+    {
+        background-color:brown;
+
+    }
+
+    .second
+    {
+        background-color:rgb(230, 205, 173);
+    }
+
+    
+   
+</style>
+</head>
+<body>
+    <table id="table-chess">
+        <thead id="theads">
+            <script>
+
+            var th = document.createElement("TH");
+            document.getElementById("theads").appendChild(th);
+            th.setAttribute("id","border");
+
+            for (var col = 1; col <= 8; col++) {
+            th = document.createElement("TH");
+            document.getElementById("theads").appendChild(th);
+          th.innerHTML=col;
+            
+            }
+            th = document.createElement("TH");
+            th.setAttribute("id","border");
+            document.getElementById("theads").appendChild(th);
+            </script>
+            </thead>
+
+               
+                
+        <script>
+var board_char = 
+[
+  ['1','2','3','4','5','6','7','8'],
+  ['@','@','@','@','@','@','@','@'],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  ['*','*','*','*','*','*','*','*'],
+  ['1','2','3','4','5','6','7','8']
+];
+                 for(var row=0;row<=7;row++)
+                 {
+                     var count=row;
+                     var rows=document.createElement("tr");
+                     rows.setAttribute("id",row);
+                     document.getElementById("table-chess").appendChild(rows);
+
+
+                     
+                     var tds=document.createElement("tr");
+                     tds.innerHTML="<b>"+(row+1)+"</b>";
+                     rows.appendChild(tds);
+                     tds.setAttribute("id","border");
+
+
+
+                     for(var column=0;column<=7;column++)
+                     {
+                         
+
+                     var tds=document.createElement("td");
+                    tds.setAttribute("id",row+"-"+column);
+                    tds.setAttribute("class","tds1");
+                    tds.innerHTML=board_char[row][column];
+
+
+                    if(count%2==0)
+                    {
+                        tds.setAttribute("class","first")
+                        count++;
+                    }
+                    else
+                    {
+                        tds.setAttribute("class","second");
+                        count++;
+                    }
+                    rows.appendChild(tds);
+                    
+                     }
+
+
+                     var tds=document.createElement("tr");
+                     tds.innerHTML="<b>"+(row+1)+"</b>";
+                     rows.appendChild(tds);
+                     tds.setAttribute("id","border");
+
+
+           
+                 }
+               </script>
+
+    </table>
+
+  <script>
+  /*
+  document.getElementById("1-2").addEventListener("click", function(){
+      if(this.innerHTML=" ")
+      {
+      document.getElementById("2-2").innerHTML=board_char[1][2];
+      
+    document.getElementById("1-2").innerHTML=" ";
+      }
+   
+  });
+
+  */
+  var board_char = 
+[
+  ['1','2','3','4','5','6','7','8'],
+  ['@','@','@','@','@','@','@','@'],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
+  ['*','*','*','*','*','*','*','*'],
+  ['1','2','3','4','5','6','7','8']
+];
+
+  for(var r=0;r<=7;r++)
+  {
+      for(var c=0;c<=7;c++)
+      {
+          document.getElementById(r+"-"+c).addEventListener("click",function(){
+              if(this.innerHTML!=" ")
+              {
+               console.log(board_char[r][c]);
+
+
+              }
+              else
+              {
+                  alert("no chharacter at this position");
+              }
+          })
+      }
+  }
+  </script>
+    
+</body>
+</html>
+
