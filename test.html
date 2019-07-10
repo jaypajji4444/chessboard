@@ -70,7 +70,7 @@ var board_char =
   ['&#9814','&#9816','&#9815','&#9813','&#9812','&#9815','&#9816','&#9814'],
   ['&#9817','&#9817','&#9817','&#9817','&#9817','&#9817','&#9817','&#9817'],
   [' ',' ',' ',' ',' ',' ',' ',' '],
-  [' ',' ',' ','&#9812',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ',' ',' ',' '],
   [' ',' ',' ',' ',' ',' ',' ',' '],
   [' ',' ',' ',' ',' ',' ',' ',' '],
   ['&#9823','&#9823','&#9823','&#9823','&#9823','&#9823','&#9823','&#9823'],
@@ -930,7 +930,7 @@ class bp
 {
     constructor(element,Black,White)
     {
-        console.log(1);
+       
         var steps=document.getElementById("steps").value;
         var ints=parseInt(element.id,10);
         var dir=document.getElementById("direction").value;
@@ -938,75 +938,820 @@ class bp
         var flag=0;
     if(steps==1 || steps==2)
     {
-        console.log(2);
-        if(steps==1)
+// --------------------------------------------Front direction----------------------------------
+        if(dir=="Front")
         {
-            check-=8;
-            console.log(3);
+            if((ints>=58 && ints<=65) && steps==2)
+            {
+                steps=2;
+            }
+            else
+            {
+                steps=1;
+            }
+            check=check-8*steps;
+            var ahead=document.getElementById(""+(ints-8)+"")
+            console.log(ints,check)
+            var inner= document.getElementById(""+check+"");
+            console.log(ahead.innerHTML,1,inner.innerHTML,2)
+            if((ahead!=null && ahead.innerHTML==" ") && (inner!=null && inner.innerHTML==" "))
+            {
+                inner.innerHTML=BlackPawn;
+                element.innerHTML=" ";
+            }
+            
+            else
+            {
+                alert("CannotMove")
+            }
         }
-        else if(steps==2)
-        {
-            check= check- steps*8;
-          
-        }
-
-        else if(dir=="FrontLeft")
+       
+// --------------------------------------------Front-Left direction----------------------------------
+         if(dir=="FrontLeft")
         {
            
             if(ints%8!=2)
             {
-                check=check+7;
-                console.log(check+"cool")
-                flag=0;
+            check=check-9;
+            var inner= document.getElementById(""+check+"");
+            if(White.includes(inner.innerHTML) && (inner!=null))
+            {
+            element.innerHTML=" ";    
+            inner.innerHTML=BlackPawn;
             }
+
             else
             {
-                flag=1;
+                alert("canntmove");
             }
+            }
+           
+            else
+            {
+              alert("cannot move")
+            }
+               
+          
         }
 
-
-
-        else if(dir=="FrontRight")
+// --------------------------------------------Front-right direction----------------------------------
+         if(dir=="FrontRight")
         {
            
             if(ints%8!=1)
             {
-                check=check-9;
-                flag=0;
-            }
-            else
+                check=check-7;
+            var inner= document.getElementById(""+check+"");
+            if(White.includes(inner.innerHTML) && (inner!=null))
             {
-                flag=1;
-            }
-        }
-
-       
-      var inner= document.getElementById(""+check+"");
-        if(!Black.includes(inner.innerHTML)  && (inner.innerHTML!=null && flag==0))
-        {
-            console.log(5);
             element.innerHTML=" ";    
             inner.innerHTML=BlackPawn;
-           
-        }
-        else
-        {
-           
-            alert("cannot move");
-        }
+            }
 
+            else
+            {
+                alert("canntmove");
+            }
+            }
+           
+            else
+            {
+              alert("cannot move")
+            }
+        }    
     }
 
     else
     {
      alert("Invalid steps");
     }
-
-        
-      
+         
      } 
 }
+///////////////////////// End of black pawn.........................................................-----------------------------=============
+
+
+//------------------------------------- start of black elephant=========================================================================================================================
+class be
+{
+    constructor(element,Black,White)
+    {
+        var steps=document.getElementById("steps").value;
+        var dir=document.getElementById("direction").value
+        
+        var ints=parseInt(element.id,10);
+        var flags=0,right=0,left=0;
+function ElephantLogic(check) // logic for movemetn of elephant...........................
+{
+    var inners=document.getElementById(""+check+"");
+               if(inners!=null)
+               {
+                for(var j=0;j<=5;j++)
+                {   
+                if(Black[j]==inners.innerHTML)
+                   {
+                    console.log("Hieee12")
+                     flags=1;  
+                     var pajji=0;
+                    alert(`cannot move ${steps} steps,try lesser steps`);
+                    break; 
+                    }   
+                }
+                for(var k=0;k<=5;k++)
+                {
+                   if(White[k]==inners.innerHTML)
+                   {
+                       var pajji=0;                      
+                    var store=(i+1);
+                    if(store==steps)
+                    {
+                        console.log("Hieee3")
+                        element.innerHTML=" ";
+                        inners.innerHTML=BlackElephant;
+                       
+                        flags=1;
+                        break;
+                    }
+                    else
+                    {                       
+                    alert(`Move less than or equal to ${store} steps`);
+                     flags=1;
+                    break;
+                    } 
+                   }
+                }             
+                      
+            }
+            else
+            {
+             alert("cannot move elephant !!")      
+            }
+            return {
+                inner:inners,
+                pajji:pajji,
+                flags:flags
+
+            }
+            }
+        if(steps<=7 && steps>0)
+        {
+     // front --------------------------------------------------------------------------------       
+        if(dir=="Front")
+        {
+            var check=ints;
+            for(var i=0;i<steps;i++) 
+            {
+                check=check-8;
+               ;
+           var getter=ElephantLogic(check);
+           if(getter.flags==1)
+           {
+               flags=0;
+               break;
+           }
+           
+            }
+            if(getter.pajji==undefined && getter.inner!=null)
+                {                    
+                    element.innerHTML=" ";
+                   getter.inner.innerHTML=BlackElephant;   
+                } 
+        }              
+ // back--------------------------------------------------------------------------------
+        if(dir=="Back")   
+        {
+            var check=ints;
+            for(var i=0;i<steps;i++) 
+            {
+                check=check+8;
+           var getter=ElephantLogic(check);
+           if(getter.flags==1)
+           {
+               flags=0;
+               break;
+           }
+           
+            }
+            if(getter.pajji==undefined && getter.inner!=null)
+                {                    
+                    element.innerHTML=" ";
+                   getter.inner.innerHTML=BlackElephant;   
+                }
+        }              
+// left=================================================================================
+        if(dir=="Left" )
+        {
+            var check=ints; 
+          for(var i=0;i<steps;i++) 
+        {
+              check=check-1;
+              var getter=ElephantLogic(check);
+             if(getter.flags==1)
+           {
+               flags=0;
+               console.log(check, ints, "1")
+               break;
+              
+           }
+           console.log(check, ints, "2")
+           if(getter.pajji==undefined && getter.inner!=null)
+              {      
+                if((check+1)%8==2)
+                    {
+                        alert("Not Possible");
+                        right=1;
+                        break;
+                      
+                       
+                    }
+                    if(right==0 && (ints-check)==steps)
+                    { 
+                                             
+                    element.innerHTML=" ";
+                   getter.inner.innerHTML=BlackElephant;
+                   break;
+                    }      
+              }
+        }        
+            
+        }
+// right=================================================================================
+        if(dir=="Right")
+        {
+            var check=ints; 
+          for(var i=0;i<steps;i++) 
+        {
+              check=check+1;
+              var getter=ElephantLogic(check);
+             if(getter.flags==1)
+           {
+               flags=0;
+               break;
+           }
+
+           if(getter.pajji==undefined && getter.inner!=null)
+              {      
+                if((check-1)%8==1)
+                    {
+                        alert("Not Possible");
+                        right=1;
+                        break;
+                      
+                       
+                    }
+                    if(right==0 && (check-ints)==steps)
+                    {                         
+                    element.innerHTML=" ";
+                   getter.inner.innerHTML=BlackElephant;
+                   break;
+                    }      
+              }
+        }        
+        
+}
+
+        }
+else  // for if steps wala if
+{
+    alert("Invalid Steps!!");
+}
+
+}
+}
+//-----------------------End of black leelphant-------------------------------------------------------================================================================
+
+
+//----------------------------------- start  of black horse---------------------------------------------------------------------------------
+            
+class bh{
+    constructor(element,Black,White)
+    {
+         var dir=document.getElementById("direction").value ;
+        var ints=parseInt(element.id,10); 
+
+         if(dir=="FrontLeft")
+        {      
+            var check=ints;
+            check=check-17;
+            bh.logic(element,check,Black,White);    
+        }
+
+        if(dir=="FrontRight")
+        {      
+            var check=ints;
+            check=check-15;
+            bh.logic(element,check,Black,White);    
+        }
+
+        if(dir=="BackRight")
+        {      
+            var check=ints;
+            check=check+17;
+            bh.logic(element,check,Black,White);    
+        }
+
+        if(dir=="BackLeft")
+        {      
+            var check=ints;
+            check=check+15;
+            bh.logic(element,check,Black,White);    
+        }
+    }
+// movement of horse.....
+static logic(element,check,Black,White)
+{
+                   
+var target=document.getElementById(""+check+"");               
+if(target!=null && (!Black.includes(target.innerHTML)) )
+{ 
+ target.innerHTML=BlackHorse;
+ element.innerHTML=" ";  
+}
+else
+{
+    alert("Cannot Move!!")
+}
+}    
+}
+
+//----------------------------------- end of black horse-----------------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------start of black knight--------------------------------------------------------------------------------------------
+
+class bk
+ {
+     constructor(element,Black,White)
+     {
+        var steps=document.getElementById("steps").value;
+        var dir=document.getElementById("direction").value
+        var ints=parseInt(element.id,10);
+        var flag=0;
+
+        function logic(check)
+        { var ahead=document.getElementById(""+check+"");
+               
+            if(ahead==null)  
+            {   
+                flag=1;
+                alert("cannot move");
+               
+            }
+            if(Black.includes(ahead.innerHTML))
+            {
+                flag=1;
+                alert("cannot moves");
+                
+            }
+            else{
+               if(White.includes(ahead.innerHTML))
+               {
+                   if(steps==i)
+                   {
+                    element.innerHTML=" ";
+                    ahead.innerHTML=BlackKnight;
+                    flag=1;
+                   }
+                   else
+                   {
+                       flag=1;
+                       alert(`move less than or equal to ${i} steps`)
+                      } }}
+            return{
+                ahead:ahead,
+                flag:flag,
+                check:check
+
+           }}   
+   // -----------==== backright=================================================        
+        if(dir=="BackRight")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check+9;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              if(getter.pajji==undefined && (getter.ahead!=null && (check-ints)==steps*9))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackKnight;
+            }           
+            }                    
+        }
+        //--------------------------------------Backleft--------------------------------------------------------
+
+        if(dir=="BackLeft")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check+7;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              if(getter.pajji==undefined && (getter.ahead!=null && (check-ints)==steps*7))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackKnight;
+            }           
+            }                    
+        }
+        //----------------------------------------------frontright.--------------
+
+        if(dir=="FrontRight")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check-7;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+               
+              if(getter.pajji==undefined && (getter.ahead!=null && (ints-check)==steps*7))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackKnight;
+            }           
+            }                    
+        }
+
+
+         //----------------------------------------------FrontLeft.--------------
+         if(dir=="FrontLeft")
+        {
+            var check=ints;
+           
+            for(var i=1;i<=steps;i++)
+            {
+                check=check-9;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              
+              if(getter.pajji==undefined && (getter.ahead!=null && (ints-check)==steps*9))
+            { 
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackKnight;
+            }           
+            }                    
+        }
+        //---------------------------------------------------------------------
+     }
+ }
+
+//------------------------------------ end of black knight--------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+//------------------------------------start of black queen------------------------------------------------------------------------------------------------
+
+
+
+class bq
+ {
+     constructor(element,Black,White)
+     {
+        var steps=document.getElementById("steps").value;
+        var dir=document.getElementById("direction").value
+        var ints=parseInt(element.id,10);
+        var flag=0;
+
+        function logic(check)
+        { var ahead=document.getElementById(""+check+"");
+               
+            if(ahead==null)  
+            {   
+                flag=1;
+                alert("cannot move");
+               
+            }
+            if(Black.includes(ahead.innerHTML))
+            {
+                flag=1;
+                alert("cannot moves");
+                
+            }
+            else{
+               if(White.includes(ahead.innerHTML))
+               {
+                   if(steps==i)
+                   {
+                    element.innerHTML=" ";
+                    ahead.innerHTML=BlackQueen;
+                    flag=1;
+                   }
+                   else
+                   {
+                       flag=1;
+                       alert(`move less than or equal to ${i} steps`)
+                      } }}
+            return{
+                ahead:ahead,
+                flag:flag,
+                check:check
+
+            }}   
+            // --------------------------BackRight---------------------------------------       
+        if(dir=="BackRight")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check+9;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              if(getter.pajji==undefined && (getter.ahead!=null && (check-ints)==steps*9))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }          
+            }                    
+        }
+        //--------------------------------------BackLeft-----------------------------
+
+        if(dir=="BackLeft")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check+7;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              if(getter.pajji==undefined && (getter.ahead!=null && (check-ints)==steps*7))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }           
+            }                    
+        }
+        //----------------------------------------------Frontright.--------------
+
+        if(dir=="FrontRight")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check-7;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+               
+              if(getter.pajji==undefined && (getter.ahead!=null && (ints-check)==steps*7))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }           
+            }                    
+        }
+
+
+         //----------------------------------------------FrontLeft.--------------
+         if(dir=="FrontLeft")
+        {
+            var check=ints;
+           
+            for(var i=1;i<=steps;i++)
+            {
+                check=check-9;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              
+              if(getter.pajji==undefined && (getter.ahead!=null && (ints-check)==steps*9))
+            { 
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }           
+            }                    
+        }
+        //---------------------------------------------------------------------Back----------------------
+        if(dir=="Back")
+        {
+            var check=ints;
+           
+            for(var i=1;i<=steps;i++)
+            {
+                check=check+8;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              
+              if(getter.pajji==undefined && (getter.ahead!=null && (check-ints)==steps*8))
+            { 
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }           
+            }                    
+        }
+      //===================================Front-----------------------
+      if(dir=="Front")
+        {
+            var check=ints;
+           
+            for(var i=1;i<=steps;i++)
+            {
+                check=check-8;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              
+              if(getter.pajji==undefined && (getter.ahead!=null && (ints-check)==steps*8))
+            { 
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }           
+            }                    
+        }
+        //----------------right-------------------------
+        if(dir=="Right")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check+1;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              if(getter.pajji==undefined && (getter.ahead!=null && (check-ints)==steps))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }          
+            }                    
+        }
+        //------------------Left--------------------------
+        if(dir=="Left")
+        {
+            var check=ints;
+            
+            for(var i=1;i<=steps;i++)
+            {
+                check=check-1;
+                var getter=logic(check);
+                if(getter.flag==1)
+                {
+                    flag=0;
+                    break;
+                }
+              if(getter.pajji==undefined && (getter.ahead!=null && (ints-check)==steps))
+            {
+                element.innerHTML=" ";
+               document.getElementById(""+getter.check+"").innerHTML=BlackQueen;
+            }          
+            }                    
+        }
+      //---------------------end---------------------
+     }
+ }
+
+//------------------------------------ end of black queen--------------------------------------------------------------------------------------------------
+
+
+
+
+
+//------------------------------------start of black king------------------------------------------------------------------------------------------------
+
+
+class bkgn{
+constructor(element,Black,White)
+{
+    var steps=document.getElementById("steps").value;
+        var dir=document.getElementById("direction").value
+        var ints=parseInt(element.id,10);
+        var check=ints;    
+        if(steps==1)
+        {
+            if(dir=="Right")
+            { 
+            check=check+1;
+            bkgn.logic(element,check,Black,White);
+            }
+
+            if(dir=="Left")
+            { 
+            check=check-1;
+           bkgn.logic(element,check,Black,White);
+            }
+
+            if(dir=="Back")
+            { 
+            check=check+8;
+           bkgn.logic(element,check,Black,White);
+            }
+
+            if(dir=="Front")
+            { 
+            check=check-8;
+           bkgn.logic(element,check,Black,White);
+            }
+
+            if(dir=="FrontRight")
+            { 
+            check=check-7;
+           bkgn.logic(element,check,Black,White);
+            }
+
+            if(dir=="Backright")
+            { 
+            check=check+9;
+            bkgn.logic(element,check,Black,White);
+            }
+
+            if(dir=="FrontLeft")
+            { 
+            check=check-9;
+            bkgn.logic(element,check,Black,White);
+            }
+
+            if(dir=="BackLeft")
+            { 
+            check=check+7;
+           bkgn.logic(element,check,Black,White);
+            }
+          
+        }
+        else
+        {
+            alert("Only one step allwed!!");
+        }
+}
+
+
+
+// logic fro kings movement...
+
+static logic(element,check,Black,White)
+{
+                   
+var target=document.getElementById(""+check+"");               
+if(target!=null && (!Black.includes(target.innerHTML)) )
+{ 
+ target.innerHTML=BlackKing;
+ element.innerHTML=" ";  
+}
+else
+{
+    alert("Cannot Move!!")
+}
+}
+}
+
+
+
+//------------------------------------ end of black king--------------------------------------------------------------------------------------------------
+
+
 
 
 
